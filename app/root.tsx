@@ -59,6 +59,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 			error.status === 404
 				? 'Belum ada njir'
 				: error.statusText || details;
+		message = `${error.status} ${error.statusText}`;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
 		details = error.message;
 		stack = error.stack;

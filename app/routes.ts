@@ -12,6 +12,7 @@ export default [
 		route('/berita', 'routes/news.tsx'),
 		route('/kontak', 'routes/contact.tsx'),
 		route('/pembagian-kelas', 'routes/class-division.tsx'),
+		route('/pembagian-kelas/:id', 'routes/class-detail.tsx'),
 	]),
 
 	route('docs/*', 'docs/page.tsx'),

@@ -57,6 +57,22 @@ export class SheetsService {
 		const objects = this.transformValuesToObjects(values);
 		return objects.map((obj) => schema.parse(obj));
 	}
+
+	transformKeyValuePairsToObject<T>(values: string[][]): T {
+		if (!values || values.length === 0) return {} as T;
+
+		const obj = Object.fromEntries(values);
+
+		return obj as T;
+	}
+
+	transformKeyValuePairsToObjectWithSchema<T>(
+		values: string[][],
+		schema: z.ZodType<T>,
+	): T {
+		const obj = this.transformKeyValuePairsToObject(values);
+		return schema.parse(obj);
+	}
 }
 
 export const sheetsService = new SheetsService();
