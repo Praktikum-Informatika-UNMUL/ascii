@@ -69,7 +69,7 @@ export default function ContactPage() {
 						<img
 							src='/ascii-typography.png'
 							alt='ASCII'
-							className='absolute bottom-5 right-0 -rotate-45 opacity-50 w-40'
+							className='absolute bottom-4 -right-4 -rotate-45 opacity-50 w-40'
 						/>
 					</div>
 
@@ -114,7 +114,7 @@ export default function ContactPage() {
 							rel='noopener noreferrer'
 						>
 							<Button className='bg-fuchsia-500 hover:bg-fuchsia-600'>
-								Ayo kontribusi <ArrowUpRight />
+								Ayo Bergabung <ArrowUpRight />
 							</Button>
 
 							<img
