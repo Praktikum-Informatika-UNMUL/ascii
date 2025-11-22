@@ -11,6 +11,7 @@ export default [
 		route('/tentang-kami', 'routes/about.tsx'),
 		route('/berita', 'routes/news.tsx'),
 		route('/kontak', 'routes/contact.tsx'),
+		route('/pembagian-kelas', 'routes/class-division.tsx'),
 	]),
 
 	route('docs/*', 'docs/page.tsx'),

@@ -19,12 +19,14 @@
     "fumadocs-core": "16.0.15",
     "fumadocs-mdx": "14.0.3",
     "fumadocs-ui": "16.0.15",
+    "googleapis": "^166.0.0",
     "isbot": "^5.1.32",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router": "^7.9.5",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@react-router/dev": "^7.9.5",
