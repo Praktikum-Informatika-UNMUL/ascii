@@ -1,3 +1,29 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+
+@theme {
+    --font-quicksand: 'Quicksand', sans-serif;
+    --color-ascii-50: #FFEEEE;
+    --color-ascii-100: #FFDADA;
+    --color-ascii-200: #FFBBBB;
+    --color-ascii-300: #FF8B8B;
+    --color-ascii-400: #FF4949;
+    --color-ascii-500: #FF1111;
+    --color-ascii-600: #FF0000;
+    --color-ascii-700: #E70000;
+    --color-ascii-800: #BE0000;
+    --color-ascii-900: #9B0000;
+    --color-ascii-950: #560000;
+}
+
+* {
+    @apply duration-200;
+}
+
+.pattern {
+    background-color: #f1f5f9;
+    opacity: 0.02;
+    background-image: linear-gradient(#9b0000 2.3000000000000003px, transparent 2.3000000000000003px), linear-gradient(to right, #9b0000 2.3000000000000003px, #f1f5f9 2.3000000000000003px);
+    background-size: 46px 46px;
+}
