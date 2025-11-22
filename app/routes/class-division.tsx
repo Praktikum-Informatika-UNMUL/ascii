@@ -16,7 +16,6 @@ export async function loader() {
 		courseSchema,
 	);
 
-	console.log('Courses:', courses);
 	return courses;
 }
 
