@@ -1,12 +1,12 @@
-import { sheetsService } from '@/api/gsheets';
-import type { Route } from './+types/class-detail';
-import { studentSchema } from '@/schemas/student';
+import { sheetsService } from '@/api/gsheets.server';
 import { classDetailSchema } from '@/schemas/class-detail';
-import { BookMarked, Monitor, Phone } from 'lucide-react';
+import { studentSchema } from '@/schemas/student';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { BookMarked, Monitor, Phone } from 'lucide-react';
 import type { ShouldRevalidateFunctionArgs } from 'react-router';
+import type { Route } from './+types/class-detail';
 
-export function shouldRevalidate(arg: ShouldRevalidateFunctionArgs) {
+export function shouldRevalidate(_: ShouldRevalidateFunctionArgs) {
 	return true;
 }
 

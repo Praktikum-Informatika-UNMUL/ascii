@@ -1,10 +1,10 @@
-import { sheetsService } from '@/api/gsheets';
+import { sheetsService } from '@/api/gsheets.server';
 import { Badge } from '@/components/ui/badge';
 import { courseSchema } from '@/schemas/course';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 import type { ShouldRevalidateFunctionArgs } from 'react-router';
-import { Link } from 'react-router';
+import { data, Link } from 'react-router';
 import type { Route } from './+types/class-division';
 
 export function shouldRevalidate(_: ShouldRevalidateFunctionArgs) {
@@ -28,7 +28,12 @@ export async function loader() {
 		courseSchema,
 	);
 
-	return courses;
+	return data(courses, {
+		headers: {
+			'Cache-Control':
+				'public, max-age=60, s-maxage=60, stale-while-revalidate=30',
+		},
+	});
 }
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
