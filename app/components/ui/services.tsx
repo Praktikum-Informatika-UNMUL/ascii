@@ -42,7 +42,7 @@ export default function Services() {
 				<ServiceCard
 					title='Aturan Praktikum'
 					description='Aturan dan tata tertib selama praktikum berlangsung.'
-					link='/aturan-praktikum'
+					link='/docs'
 					icon={ScrollText}
 					variant={'100'}
 				/>
