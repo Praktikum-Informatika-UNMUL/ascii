@@ -5,6 +5,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { BookMarked, Monitor, Phone } from 'lucide-react';
 import type { ShouldRevalidateFunctionArgs } from 'react-router';
 import type { Route } from './+types/class-detail';
+import { Badge } from '@/components/ui/badge';
 
 export function shouldRevalidate(_: ShouldRevalidateFunctionArgs) {
 	return true;
