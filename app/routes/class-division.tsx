@@ -13,8 +13,11 @@ export function shouldRevalidate(_: ShouldRevalidateFunctionArgs) {
 
 export function headers(_: Route.HeadersArgs) {
 	return {
-		'Cache-Control':
-			'public, max-age=60, s-maxage=60, stale-while-revalidate=30',
+		'Cache-Control': 'public, no-cache, no-store, must-revalidate',
+		'CDN-Cache-Control': 'max-age=0, s-maxage=0',
+		'Vercel-CDN-Cache-Control': 'max-age=0, s-maxage=0',
+		Pragma: 'no-cache',
+		Expires: '0',
 	};
 }
 
@@ -30,8 +33,11 @@ export async function loader() {
 
 	return data(courses, {
 		headers: {
-			'Cache-Control':
-				'public, max-age=60, s-maxage=60, stale-while-revalidate=30',
+			'Cache-Control': 'public, no-cache, no-store, must-revalidate',
+			'CDN-Cache-Control': 'max-age=0, s-maxage=0',
+			'Vercel-CDN-Cache-Control': 'max-age=0, s-maxage=0',
+			Pragma: 'no-cache',
+			Expires: '0',
 		},
 	});
 }
