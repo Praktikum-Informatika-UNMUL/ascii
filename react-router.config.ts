@@ -5,7 +5,7 @@ import { createGetUrl, getSlugs } from 'fumadocs-core/source';
 const getUrl = createGetUrl('/docs');
 
 export default {
-	ssr: false,
+	ssr: true,
 	async prerender({ getStaticPaths }) {
 		const paths: string[] = [];
 		const excluded: string[] = ['/api/search'];

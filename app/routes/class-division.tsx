@@ -3,9 +3,9 @@ import { Badge } from '@/components/ui/badge';
 import { courseSchema } from '@/schemas/course';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
+import type { ShouldRevalidateFunctionArgs } from 'react-router';
 import { Link } from 'react-router';
 import type { Route } from './+types/class-division';
-import type { ShouldRevalidateFunctionArgs } from 'react-router';
 
 export function shouldRevalidate(arg: ShouldRevalidateFunctionArgs) {
 	return true;
@@ -22,6 +22,17 @@ export async function loader() {
 	);
 
 	return courses;
+}
+
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+	const response = await serverLoader();
+	return response;
+}
+
+clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+	return <div>Loading...</div>;
 }
 
 export default function ClassDivision({ loaderData }: Route.ComponentProps) {
