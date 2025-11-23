@@ -37,6 +37,26 @@ export async function loader({ params }: Route.LoaderArgs) {
 	return { students, classDetail };
 }
 
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+	const response = await serverLoader();
+	return response;
+}
+
+clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+	return (
+		<div className='space-y-32 py-32'>
+			<div className='text-center space-y-4'>
+				<Badge className='mx-auto'>Praktikum</Badge>
+				<h2 className='text-2xl font-bold lg:text-4xl text-balance leading-relaxed'>
+					Memuat Pembagian Kelas Praktikum...
+				</h2>
+			</div>
+		</div>
+	);
+}
+
 export default function ClassDetail({ loaderData }: Route.ComponentProps) {
 	const { classDetail, students } = loaderData;
 

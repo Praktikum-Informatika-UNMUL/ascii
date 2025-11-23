@@ -3,27 +3,24 @@ import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import type { Route } from './+types/class-division';
-import type { Course } from '@/schemas/course';
-
-// export function shouldRevalidate(_: ShouldRevalidateFunctionArgs) {
-// 	return true;
-// }
-
-// export function headers(_: Route.HeadersArgs) {
-// 	return {
-// 		'Cache-Control': 'public, no-cache, no-store, must-revalidate',
-// 		'CDN-Cache-Control': 'max-age=0, s-maxage=0',
-// 		'Vercel-CDN-Cache-Control': 'max-age=0, s-maxage=0',
-// 		Pragma: 'no-cache',
-// 		Expires: '0',
-// 	};
-// }
+import { courseSchema } from '@/schemas/course';
+import { sheetsService } from '@/api/gsheets.server';
 
 export async function loader() {
-	const res = await fetch(import.meta.env.VITE_API_BASE_URL);
-	const data: Course[] = await res.json();
+	const coursesRaw = await sheetsService.getSheetValues('List Matakuliah');
 
-	return data;
+	if (!coursesRaw)
+		throw new Response('Gagal memuat data mata kuliah', {
+			status: 500,
+			statusText: 'Gagal memuat data mata kuliah',
+		});
+
+	const courses = sheetsService.transformValuesToObjectsWithSchema(
+		coursesRaw,
+		courseSchema,
+	);
+
+	return courses;
 }
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
@@ -34,7 +31,16 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 clientLoader.hydrate = true as const;
 
 export function HydrateFallback() {
-	return <div>Loading...</div>;
+	return (
+		<div className='space-y-32 py-32'>
+			<div className='text-center space-y-4'>
+				<Badge className='mx-auto'>Praktikum</Badge>
+				<h2 className='text-2xl font-bold lg:text-4xl text-balance leading-relaxed'>
+					Memuat Pembagian Kelas Praktikum...
+				</h2>
+			</div>
+		</div>
+	);
 }
 
 export default function ClassDivision({ loaderData }: Route.ComponentProps) {
