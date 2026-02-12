@@ -1,6 +1,6 @@
 import { AsistantCard } from '@/components/ui/asistant-card';
 import { Badge } from '@/components/ui/badge';
-import { koor, pengurus } from '@/constants/asistants';
+import { koor, pengaduan, pengurus } from '@/constants/asistants';
 
 export default function AboutPage() {
 	return (
@@ -49,6 +49,30 @@ export default function AboutPage() {
 
 				<div className='mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 					{koor.map((item) => (
+						<AsistantCard
+							key={item.name}
+							name={item.name}
+							course={item.course}
+							imageUrl={item.imageUrl}
+						/>
+					))}
+				</div>
+			</section>
+
+			<section className='space-y-4 text-center'>
+				<Badge className='mx-auto'>Pengaduan</Badge>
+				<h2 className='text-2xl font-bold lg:text-4xl text-balance leading-relaxed'>
+					Tim Pengaduan
+				</h2>
+				<p className='text-lg text-balance text-fd-muted-foreground leading-relaxed'>
+					Tim pengaduan ASCII bertugas untuk menangani pengaduan dan
+					masukan dari mahasiswa terkait kegiatan praktikum, serta
+					memastikan respons yang cepat dan solusi yang tepat.
+				</p>
+
+				<div className='mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+					<div></div>
+					{pengaduan.map((item) => (
 						<AsistantCard
 							key={item.name}
 							name={item.name}

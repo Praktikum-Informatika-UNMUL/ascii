@@ -84,3 +84,16 @@ export const koor: Array<Asistant> = [
 		imageUrl: '/orang/B9_MED.png',
 	},
 ];
+
+export const pengaduan: Array<Asistant> = [
+	{
+		name: 'Muhammad Naufal Fahrozi',
+		course: 'Tim Pengaduan',
+		imageUrl: '/orang/C1.png',
+	},
+	{
+		name: 'Akmal Alvian Pratama',
+		course: 'Tim Pengaduan',
+		imageUrl: '/orang/C2.png',
+	},
+];
