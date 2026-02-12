@@ -1,4 +1,6 @@
+import { AsistantCard } from '@/components/ui/asistant-card';
 import { Badge } from '@/components/ui/badge';
+import { koor, pengurus } from '@/constants/asistants';
 
 export default function AboutPage() {
 	return (
@@ -22,12 +24,16 @@ export default function AboutPage() {
 					dan dosen.
 				</p>
 
-				<img
-					src='/pengurus.png'
-					alt='Pengurus ASCII'
-					className='mt-16 w-full object-cover'
-					loading='lazy'
-				/>
+				<div className='mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+					{pengurus.map((item) => (
+						<AsistantCard
+							key={item.name}
+							name={item.name}
+							course={item.course}
+							imageUrl={item.imageUrl}
+						/>
+					))}
+				</div>
 			</section>
 
 			<section className='space-y-4 text-center'>
@@ -41,19 +47,15 @@ export default function AboutPage() {
 					laboratorium informatika.
 				</p>
 
-				<div>
-					<img
-						src='/koor-1.png'
-						alt='Koor'
-						className='object-cover w-full'
-						loading='lazy'
-					/>
-					<img
-						src='/koor-2.png'
-						alt='Koor'
-						className='object-cover w-full'
-						loading='lazy'
-					/>
+				<div className='mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+					{koor.map((item) => (
+						<AsistantCard
+							key={item.name}
+							name={item.name}
+							course={item.course}
+							imageUrl={item.imageUrl}
+						/>
+					))}
 				</div>
 			</section>
 		</div>
