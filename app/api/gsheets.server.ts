@@ -28,7 +28,9 @@ export class SheetsService {
 
 			return response.data.values;
 		} catch (error) {
+			// biome-ignore-start lint: <Aduhai>
 			console.error('Error fetching sheet values:', error);
+			// biome-ignore-end lint: <Aduhai>
 			throw error;
 		}
 	}

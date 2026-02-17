@@ -1,31 +1,30 @@
-import { Badge } from '@/components/ui/badge';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { Badge } from '@/components/ui/badge';
+import { queryClient } from '@/lib/react-query';
+import { getCoursesQueryOptions } from '@/queries/get-courses';
 import type { Route } from './+types/class-division';
-import { courseSchema } from '@/schemas/course';
-import { sheetsService } from '@/api/gsheets.server';
 
 export async function loader() {
-	const coursesRaw = await sheetsService.getSheetValues('List Matakuliah');
+	try {
+		const courses = await queryClient.fetchQuery(getCoursesQueryOptions());
 
-	if (!coursesRaw)
-		throw new Response('Gagal memuat data mata kuliah', {
-			status: 500,
-			statusText: 'Gagal memuat data mata kuliah',
-		});
-
-	const courses = sheetsService.transformValuesToObjectsWithSchema(
-		coursesRaw,
-		courseSchema,
-	);
-
-	return courses;
+		return { courses };
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Response(error.message, {
+				status: 500,
+				statusText: error.message,
+			});
+		}
+	}
 }
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 	const response = await serverLoader();
-	return response;
+	const courses = response?.courses;
+	return { courses };
 }
 
 clientLoader.hydrate = true as const;
@@ -44,7 +43,7 @@ export function HydrateFallback() {
 }
 
 export default function ClassDivision({ loaderData }: Route.ComponentProps) {
-	const courses = loaderData;
+	const courses = loaderData.courses || [];
 	const [searchTerm, setSearchTerm] = useState('');
 
 	const filteredCourses = courses.filter(

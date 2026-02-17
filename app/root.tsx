@@ -9,7 +9,8 @@ import {
 } from 'react-router';
 import type { Route } from './+types/root';
 import './app.css';
-import { env } from './lib/env';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './lib/react-query';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -25,7 +26,6 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-	console.log(env);
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head>
@@ -37,8 +37,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body className='flex flex-col min-h-screen font-quicksand'>
-				<RootProvider>{children}</RootProvider>
+			<body
+				className='flex flex-col min-h-screen font-quicksand'
+				cz-shortcut-listen='true'
+			>
+				<QueryClientProvider client={queryClient}>
+					<RootProvider>{children}</RootProvider>
+				</QueryClientProvider>
 				<ScrollRestoration />
 				<Scripts />
 			</body>

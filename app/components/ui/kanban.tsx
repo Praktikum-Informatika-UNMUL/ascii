@@ -1,7 +1,11 @@
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { type Activity, activities } from '@/constants/activities';
+import type { Activity } from '@/constants/activities';
 import { courses } from '@/constants/courses';
+
+type Props = {
+	activities: Array<Activity>;
+};
 
 const times = [
 	'07:30 - 09:00',
@@ -9,8 +13,9 @@ const times = [
 	'10:50 - 12:20',
 	'13:00 - 14:30',
 	'14:40 - 16:10',
+	'16:20 - 17:50',
 ];
-const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at"];
+const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
 const labs = [
 	'D208',
 	'D203',
@@ -20,31 +25,30 @@ const labs = [
 	'Lab Robotik',
 ];
 
-const d208Activities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'D208',
-);
+export function Kanban({ activities }: Props) {
+	const d208Activities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'D208',
+	);
 
-const d203Activities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'D203',
-);
+	const d203Activities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'D203',
+	);
 
-const networkActivities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'Lab Network',
-);
+	const networkActivities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'Lab Network',
+	);
 
-const webEngineeringActivities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'Lab Web Engineering',
-);
+	const webEngineeringActivities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'Lab Web Engineering',
+	);
 
-const multimediaActivities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'Lab Multimedia',
-);
+	const multimediaActivities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'Lab Multimedia',
+	);
 
-const robotikActivities: Array<Activity> = activities.filter(
-	(activity) => activity.location === 'Lab Robotik',
-);
-
-export function Kanban() {
+	const robotikActivities: Array<Activity> = activities.filter(
+		(activity) => activity.location === 'Lab Robotik',
+	);
 	return (
 		<>
 			<Tabs items={labs}>
@@ -100,11 +104,11 @@ function Table({ activities }: { activities: Array<Activity> }) {
 				</tr>
 			</thead>
 			<tbody>
-				{Array.from({ length: 5 }, (_, i) => (
+				{times.map((time, i) => (
 					<tr key={i.toString()}>
-						<td className='border text-center p-4'>{times[i]}</td>
+						<td className='border text-center p-4'>{time}</td>
 						{days.map((day) => (
-							<td key={day} className='border p-4'>
+							<td key={day} className='border p-4 uppercase'>
 								{activities
 									.filter(
 										(activity) =>
