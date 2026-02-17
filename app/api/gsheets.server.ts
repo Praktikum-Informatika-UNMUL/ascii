@@ -1,5 +1,6 @@
 import { google } from 'googleapis';
 import type z from 'zod';
+import { env } from '@/lib/env';
 
 export class SheetsService {
 	private auth;
@@ -8,11 +9,8 @@ export class SheetsService {
 	constructor() {
 		this.auth = new google.auth.GoogleAuth({
 			credentials: {
-				client_email: import.meta.env.VITE_GOOGLE_CLIENT_EMAIL,
-				private_key: import.meta.env.VITE_GOOGLE_PRIVATE_KEY.replace(
-					/\\n/g,
-					'\n',
-				),
+				client_email: env.VITE_GOOGLE_CLIENT_EMAIL,
+				private_key: env.VITE_GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
 			},
 			scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 		});
@@ -24,13 +22,15 @@ export class SheetsService {
 		try {
 			const rangeSheet = range ? `${sheetName}!${range}` : sheetName;
 			const response = await this.sheets.spreadsheets.values.get({
-				spreadsheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
+				spreadsheetId: env.VITE_GOOGLE_SHEET_ID,
 				range: rangeSheet,
 			});
 
 			return response.data.values;
 		} catch (error) {
+			// biome-ignore-start lint: <Aduhai>
 			console.error('Error fetching sheet values:', error);
+			// biome-ignore-end lint: <Aduhai>
 			throw error;
 		}
 	}

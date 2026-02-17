@@ -1,36 +1,28 @@
-import { sheetsService } from '@/api/gsheets.server';
-import { classDetailSchema } from '@/schemas/class-detail';
-import { studentSchema } from '@/schemas/student';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { BookMarked, Monitor, Phone } from 'lucide-react';
-import type { Route } from './+types/class-detail';
 import { Badge } from '@/components/ui/badge';
+import { queryClient } from '@/lib/react-query';
+import { getClassDetailQueryOptions } from '@/queries/get-class-detail';
+import type { ClassDetail } from '@/schemas/class-detail';
+import type { Route } from './+types/class-detail';
 
 export async function loader({ params }: Route.LoaderArgs) {
 	const { id } = params;
 
-	const [studentsRaw, classDetailRaw] = await Promise.all([
-		sheetsService.getSheetValues(id, 'A:B'),
-		sheetsService.getSheetValues(id, 'D2:E11'),
-	]);
+	try {
+		const data = await queryClient.fetchQuery(
+			getClassDetailQueryOptions(id),
+		);
 
-	if (!classDetailRaw || classDetailRaw.length === 0)
-		throw new Response('Kelas tidak ditemukan', {
-			status: 404,
-			statusText: 'Kelas tidak ditemukan njir',
-		});
-
-	const students = sheetsService.transformValuesToObjectsWithSchema(
-		studentsRaw ?? [],
-		studentSchema,
-	);
-
-	const classDetail = sheetsService.transformKeyValuePairsToObjectWithSchema(
-		classDetailRaw,
-		classDetailSchema,
-	);
-
-	return { students, classDetail };
+		return data;
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Response(error.message, {
+				status: 404,
+				statusText: error.message,
+			});
+		}
+	}
 }
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
@@ -53,8 +45,9 @@ export function HydrateFallback() {
 	);
 }
 
-export default function ClassDetail({ loaderData }: Route.ComponentProps) {
-	const { classDetail, students } = loaderData;
+export default function ClassDetailPage({ loaderData }: Route.ComponentProps) {
+	const classDetail = loaderData?.classDetail || ({} as ClassDetail);
+	const students = loaderData?.students || [];
 
 	return (
 		<div className='space-y-32 py-32'>

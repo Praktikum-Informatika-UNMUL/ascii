@@ -1,8 +1,8 @@
 import {
 	index,
 	layout,
-	route,
 	type RouteConfig,
+	route,
 } from '@react-router/dev/routes';
 
 export default [
@@ -13,6 +13,7 @@ export default [
 		route('/kontak', 'routes/contact.tsx'),
 		route('/pembagian-kelas', 'routes/class-division.tsx'),
 		route('/pembagian-kelas/:id', 'routes/class-detail.tsx'),
+		route('/jadwal-praktikum', 'routes/schedule.tsx'),
 	]),
 
 	route('docs/*', 'docs/page.tsx'),
