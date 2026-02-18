@@ -1,6 +1,6 @@
+import { glob } from 'node:fs/promises';
 import type { Config } from '@react-router/dev/config';
 import { createGetUrl, getSlugs } from 'fumadocs-core/source';
-import { glob } from 'node:fs/promises';
 
 const getUrl = createGetUrl('/docs');
 
@@ -8,7 +8,11 @@ export default {
 	ssr: true,
 	async prerender({ getStaticPaths }) {
 		const paths: string[] = [];
-		const excluded: string[] = ['/api/search', '/pembagian-kelas'];
+		const excluded: string[] = [
+			'/api/search',
+			'/pembagian-kelas',
+			'/jadwal-praktikum',
+		];
 
 		for (const path of getStaticPaths()) {
 			if (excluded.includes(path)) {
