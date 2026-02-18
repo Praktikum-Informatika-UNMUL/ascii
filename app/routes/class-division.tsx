@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { queryClient } from '@/lib/react-query';
 import { getCoursesQueryOptions } from '@/queries/get-courses';
@@ -44,25 +44,31 @@ export function HydrateFallback() {
 
 export default function ClassDivision({ loaderData }: Route.ComponentProps) {
 	const courses = loaderData.courses || [];
-	const [searchTerm, setSearchTerm] = useState('');
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const filteredCourses = courses.filter(
 		(course) =>
 			course['Nama Kelas']
 				.toLowerCase()
-				.includes(searchTerm.toLowerCase()) ||
+				.includes(searchParams.get('q')?.toLowerCase() || '') ||
 			course['Mata Kuliah']
 				.toLowerCase()
-				.includes(searchTerm.toLowerCase()) ||
+				.includes(searchParams.get('q')?.toLowerCase() || '') ||
 			course['Kode Kelas']
 				.toLowerCase()
-				.includes(searchTerm.toLowerCase()),
+				.includes(searchParams.get('q')?.toLowerCase() || ''),
 	);
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setSearchTerm(e.target.value);
+		setSearchParams({ q: e.target.value });
 
-	const handleClearSearch = () => setSearchTerm('');
+	const handleClearSearch = () => setSearchParams({ q: '' });
+
+	useEffect(() => {
+		if (!searchParams.get('q')) {
+			setSearchParams({});
+		}
+	}, [searchParams, setSearchParams]);
 
 	return (
 		<div className='space-y-32 py-32'>
@@ -84,13 +90,13 @@ export default function ClassDivision({ loaderData }: Route.ComponentProps) {
 				<div className='relative mt-16'>
 					<input
 						type='text'
-						value={searchTerm}
+						value={searchParams.get('q') || ''}
 						onChange={handleSearchChange}
 						placeholder='Cari kelas antum berdasarkan nama kelas...'
 						className='p-4 border rounded-2xl w-full'
 					/>
 					<Search className='absolute right-4 top-1/2 transform -translate-y-1/2 text-fd-muted-foreground' />
-					{searchTerm && (
+					{searchParams && (
 						<X
 							className='absolute right-12 top-1/2 transform -translate-y-1/2 text-fd-muted-foreground cursor-pointer'
 							onClick={handleClearSearch}
