@@ -1,5 +1,6 @@
 export type Activity = {
 	class: string;
+	course: string;
 	time: number;
 	day: 'Senin' | 'Selasa' | 'Rabu' | 'Kamis' | 'Jumat';
 	location:

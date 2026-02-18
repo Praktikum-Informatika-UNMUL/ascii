@@ -7,7 +7,7 @@ import { studentSchema } from '@/schemas/student';
 export const getClassDetail = async (id: string) => {
 	const [studentsRaw, classDetailRaw] = await Promise.all([
 		sheetsService.getSheetValues(id, 'A:B'),
-		sheetsService.getSheetValues(id, 'D2:E11'),
+		sheetsService.getSheetValues(id, 'D2:E12'),
 	]);
 
 	if (!classDetailRaw || classDetailRaw.length === 0)
