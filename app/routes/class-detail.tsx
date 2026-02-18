@@ -69,6 +69,7 @@ export default function ClassDetailPage({ loaderData }: Route.ComponentProps) {
 						</h1>
 
 						<h2 className='text-xs lg:text-base text-balance'>
+							{classDetail['Hari Ramadhan']}{' '}
 							{classDetail['Jam Ramadhan']}{' '}
 							{classDetail['Tempat']}
 						</h2>
