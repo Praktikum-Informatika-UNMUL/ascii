@@ -8,43 +8,19 @@ type Props = {
 	activities: Array<Activity>;
 };
 
-// Senin - Kamis
-// 08:00 - 09:00
-// 09:15 - 10:15
-// 10:30 - 11:30
-// 13:00 - 14:00
-// 14:15 - 15:15
-// 15:30 - 16:30
-// Jumat
-// 08:00 - 09:00
-// 09:15 - 10:15
-// 10:30 - 11:30
-// 13:30 - 14:30
-// 14:45 - 15:45
-// 16:00 - 17:00
-// const times = [
-// 	'07:30 - 09:00',
-// 	'09:00 - 10:40',
-// 	'10:50 - 12:20',
-// 	'13:00 - 14:30',
-// 	'14:40 - 16:10',
-// 	'16:20 - 17:50',
-// ];
 const sundayToThursdayTimes = [
 	'08:00 - 09:00',
-	'09:15 - 10:15',
-	'10:30 - 11:30',
-	'13:00 - 14:00',
-	'14:15 - 15:15',
-	'15:30 - 16:30',
+	'09:20 - 10:30',
+	'10:40 - 11:50',
+	'12:40 - 13:45',
+	'13:50 - 15:00',
 ];
 const fridayTimes = [
 	'08:00 - 09:00',
-	'09:15 - 10:15',
-	'10:30 - 11:30',
-	'13:30 - 14:30',
-	'14:45 - 15:45',
-	'16:00 - 17:00',
+	'09:20 - 10:30',
+	'10:40 - 11:50',
+	'13:30 - 14:40',
+	'14:50 - 16:00',
 ];
 const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
 const labs = [
@@ -80,6 +56,7 @@ export function Kanban({ activities }: Props) {
 	const robotikActivities: Array<Activity> = activities.filter(
 		(activity) => activity.location === 'Lab Robotik',
 	);
+
 	return (
 		<>
 			<Tabs items={labs}>
@@ -122,8 +99,8 @@ export function Kanban({ activities }: Props) {
 }
 
 function Table({ activities }: { activities: Array<Activity> }) {
-	const getActivity = (day: string, timeSlot: number) => {
-		return activities.find(
+	const getActivities = (day: string, timeSlot: number) => {
+		return activities.filter(
 			(activity) => activity.day === day && activity.time === timeSlot,
 		);
 	};
@@ -155,7 +132,7 @@ function Table({ activities }: { activities: Array<Activity> }) {
 					return (
 						<>
 							{times.map((time, timeIndex) => {
-								const activity = getActivity(
+								const activitiesList = getActivities(
 									day,
 									timeIndex + 1,
 								);
@@ -170,13 +147,35 @@ function Table({ activities }: { activities: Array<Activity> }) {
 													{time}
 												</td>
 												<td className='border border-fd-border p-3 uppercase'>
-													{activity
-														? activity.class
+													{activitiesList.length > 0
+														? activitiesList.map(
+																(act, idx) => (
+																	<div
+																		key={idx.toString()}
+																	>
+																		{
+																			act.class
+																		}
+																	</div>
+																),
+															)
 														: '-'}
 												</td>
 
 												<td className='border border-fd-border p-3 text-ascii-900 dark:text-ascii-300'>
-													{activity?.course}
+													{activitiesList.length > 0
+														? activitiesList.map(
+																(act, idx) => (
+																	<div
+																		key={idx.toString()}
+																	>
+																		{
+																			act.course
+																		}
+																	</div>
+																),
+															)
+														: '-'}
 												</td>
 											</tr>
 											<tr key={`${day}-prayer`}>
@@ -212,11 +211,31 @@ function Table({ activities }: { activities: Array<Activity> }) {
 											{time}
 										</td>
 										<td className='border border-fd-border p-3 uppercase'>
-											{activity ? activity.class : '-'}
+											{activitiesList.length > 0
+												? activitiesList.map(
+														(act, idx) => (
+															<div
+																key={idx.toString()}
+															>
+																{act.class}
+															</div>
+														),
+													)
+												: '-'}
 										</td>
 
 										<td className='border border-fd-border p-3 text-ascii-900 dark:text-ascii-300'>
-											{activity?.course}
+											{activitiesList.length > 0
+												? activitiesList.map(
+														(act, idx) => (
+															<div
+																key={idx.toString()}
+															>
+																{act.course}
+															</div>
+														),
+													)
+												: '-'}
 										</td>
 									</tr>
 								);
