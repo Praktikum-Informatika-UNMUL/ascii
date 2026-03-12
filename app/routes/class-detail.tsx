@@ -116,7 +116,11 @@ export default function ClassDetailPage({ loaderData }: Route.ComponentProps) {
 						</Callout>
 					</a>
 
-					<a href={classDetail['Link GWA']} target='_blank'>
+					<a
+						href='https://www.youtube.com/watch?v=jWrlRy5DNys'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<Callout type='success' icon={<Phone />}>
 							Grup Whatsapp
 						</Callout>
