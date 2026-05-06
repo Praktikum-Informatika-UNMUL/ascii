@@ -1,9 +1,10 @@
 import { Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { Link, useLocation, useSearchParams } from 'react-router';
 import { useDebounce } from 'use-debounce';
 import { Badge } from '@/components/ui/badge';
 import { queryClient } from '@/lib/react-query';
+import BuildSeoTags from '@/lib/seo';
 import { getCoursesQueryOptions } from '@/queries/get-courses';
 import type { Route } from './+types/class-division';
 
@@ -46,6 +47,7 @@ export function HydrateFallback() {
 export default function ClassDivision({ loaderData }: Route.ComponentProps) {
 	const courses = loaderData.courses || [];
 	const [searchParams, setSearchParams] = useSearchParams();
+	const location = useLocation();
 	const [searchTerms, setSearchTerms] = useState(searchParams.get('q') || '');
 	const [value] = useDebounce(searchTerms, 300);
 
@@ -74,10 +76,10 @@ export default function ClassDivision({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className='space-y-32 py-32'>
-			<title>Pembagian Kelas | ASCII</title>
-			<meta
-				name='description'
-				content='Pembagian Kelas Praktikum Informatika Universitas Mulawarman'
+			<BuildSeoTags
+				title='Pembagian Kelas | ASCII'
+				description='Pembagian Kelas Praktikum Informatika Universitas Mulawarman'
+				pathname={location.pathname}
 			/>
 			<section className='space-y-4 text-center'>
 				<Badge className='mx-auto'>Praktikum</Badge>

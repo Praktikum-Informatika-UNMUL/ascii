@@ -10,11 +10,13 @@ const envSchema = z.object({
 	VITE_GOOGLE_SHEET_ID: z
 		.string()
 		.min(1, { error: 'VITE_GOOGLE_SHEET_ID is required' }),
+	VITE_SITE_URL: z.url({ error: 'VITE_SITE_URL must be a valid URL' }),
 });
 
 const parse = envSchema.safeParse(import.meta.env);
 
 if (!parse.success) {
+	// biome-ignore lint/suspicious/noConsole: explanation
 	console.error('Invalid environment variables:', parse.error.format());
 	throw new Error('Invalid environment variables');
 }

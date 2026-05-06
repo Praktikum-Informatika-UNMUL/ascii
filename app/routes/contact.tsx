@@ -1,14 +1,18 @@
+import { ArrowUpRight, Github, Instagram } from 'lucide-react';
+import { useLocation } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, Github, Instagram } from 'lucide-react';
+import BuildSeoTags from '@/lib/seo';
 
 export default function ContactPage() {
+	const location = useLocation();
+
 	return (
 		<div className='space-y-32 py-32'>
-			<title>Hubungi Kami | ASCII</title>
-			<meta
-				name='description'
-				content='Hubungi Asisten Laboratorium Informatika (ASCII) untuk pertanyaan, dukungan, atau informasi lebih lanjut.'
+			<BuildSeoTags
+				title='Hubungi Kami | ASCII'
+				description='Hubungi Asisten Laboratorium Informatika (ASCII) untuk pertanyaan, dukungan, atau informasi lebih lanjut.'
+				pathname={location.pathname}
 			/>
 			<section className='space-y-4 text-center'>
 				<Badge className='mx-auto'>Kontak</Badge>

@@ -1,7 +1,9 @@
+import { useLocation } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { Kanban } from '@/components/ui/kanban';
 import type { Activity } from '@/constants/activities';
 import { queryClient } from '@/lib/react-query';
+import BuildSeoTags from '@/lib/seo';
 import { getSchedulesQueryOptions } from '@/queries/get-schedules';
 import type { Route } from './+types/schedule';
 
@@ -44,11 +46,15 @@ export function HydrateFallback() {
 
 export default function Schedule({ loaderData }: Route.ComponentProps) {
 	const schedules = (loaderData?.schedules || []) as Array<Activity>;
+	const location = useLocation();
 
 	return (
 		<div className='space-y-32 py-32'>
-			<title>Jadwal Praktikum | ASCII</title>
-			<meta name='description' content='Jadwal Praktikum Informatika' />
+			<BuildSeoTags
+				title='Jadwal Praktikum | ASCII'
+				description='Jadwal Praktikum Informatika'
+				pathname={location.pathname}
+			/>
 			<section className='space-y-4 text-center'>
 				<Badge className='mx-auto'>Jadwal</Badge>
 				<h2 className='text-2xl font-bold lg:text-4xl text-balance leading-relaxed'>

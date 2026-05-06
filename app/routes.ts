@@ -18,4 +18,6 @@ export default [
 
 	route('docs/*', 'docs/page.tsx'),
 	route('api/search', 'docs/search.ts'),
+	route('robots.txt', 'routes/robots[.]txt.tsx'),
+	route('sitemap.xml', 'routes/sitemap[.]xml.tsx'),
 ] satisfies RouteConfig;

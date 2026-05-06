@@ -1,7 +1,9 @@
 import { Callout } from 'fumadocs-ui/components/callout';
 import { BookMarked, Monitor, Phone } from 'lucide-react';
+import { useLocation } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { queryClient } from '@/lib/react-query';
+import BuildSeoTags from '@/lib/seo';
 import { getClassDetailQueryOptions } from '@/queries/get-class-detail';
 import type { ClassDetail } from '@/schemas/class-detail';
 import type { Route } from './+types/class-detail';
@@ -48,16 +50,22 @@ export function HydrateFallback() {
 export default function ClassDetailPage({ loaderData }: Route.ComponentProps) {
 	const classDetail = loaderData?.classDetail || ({} as ClassDetail);
 	const students = loaderData?.students || [];
+	const location = useLocation();
 
 	return (
 		<div className='space-y-32 py-32'>
-			<title>
-				{`${classDetail['Mata Kuliah']} - ${classDetail['Nama Kelas']} | ASCII`}
-			</title>
-
-			<meta
-				name='description'
-				content={`Detail pembagian kelas praktikum ${classDetail['Mata Kuliah']} untuk mahasiswa Informatika.`}
+			<BuildSeoTags
+				title={
+					classDetail['Mata Kuliah']
+						? `${classDetail['Mata Kuliah']} - ${classDetail['Nama Kelas']} | ASCII`
+						: 'Detail Kelas | ASCII'
+				}
+				description={
+					classDetail['Mata Kuliah']
+						? `Detail pembagian kelas praktikum ${classDetail['Mata Kuliah']} untuk mahasiswa Informatika.`
+						: 'Detail pembagian kelas praktikum.'
+				}
+				pathname={location.pathname}
 			/>
 
 			<section className='space-y-4 text-center'>

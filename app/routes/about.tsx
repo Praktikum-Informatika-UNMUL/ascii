@@ -1,16 +1,18 @@
+import { useLocation } from 'react-router';
 import { AsistantCard } from '@/components/ui/asistant-card';
 import { Badge } from '@/components/ui/badge';
 import { koor, pengaduan, pengurus } from '@/constants/asistants';
+import BuildSeoTags from '@/lib/seo';
 
 export default function AboutPage() {
+	const location = useLocation();
+
 	return (
 		<div className='space-y-32 py-32 '>
-			<title>
-				Struktur Organisasi Asisten Laboratorium Informatika | ASCII
-			</title>
-			<meta
-				name='description'
-				content='Struktur Organisasi Asisten Laboratorium Informatika (ASCII)'
+			<BuildSeoTags
+				title='Struktur Organisasi Asisten Laboratorium Informatika | ASCII'
+				description='Struktur Organisasi Asisten Laboratorium Informatika (ASCII)'
+				pathname={location.pathname}
 			/>
 			<section className='space-y-4 text-center'>
 				<Badge className='mx-auto'>ASCII</Badge>

@@ -1,20 +1,19 @@
+import { useLocation } from 'react-router';
 import Hero from '@/components/ui/hero';
 import News from '@/components/ui/news';
 import Services from '@/components/ui/services';
-
-export function meta() {
-	return [
-		{ title: 'ASCII | Informatika' },
-		{
-			name: 'description',
-			content: 'ASCII Informatika Universitas Mulawarman',
-		},
-	];
-}
+import BuildSeoTags from '@/lib/seo';
 
 export default function Home() {
+	const location = useLocation();
+
 	return (
 		<div className='space-y-32 py-32'>
+			<BuildSeoTags
+				title='ASCII | Informatika'
+				description='ASCII Informatika Universitas Mulawarman'
+				pathname={location.pathname}
+			/>
 			<Hero />
 			<Services />
 			<News />
